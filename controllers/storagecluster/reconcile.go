@@ -685,6 +685,12 @@ func (r *StorageClusterReconciler) isActiveStorageCluster(instance *ocsv1.Storag
 		return false
 	}
 
+	// Do not allow Multiple Storage Clusters in same namespace
+	if r.clusters.HasMultipleStorageClustersInNamespace(instance.Namespace) &&
+		!r.isStorageClusterNotIgnored(instance, r.clusters.GetStorageClustersInNamespace(instance.Namespace)) {
+		return false
+	}
+
 	var storageClusterList []ocsv1.StorageCluster
 	if !instance.Spec.ExternalStorage.Enable {
 		storageClusterList = r.clusters.GetInternalStorageClusters()
