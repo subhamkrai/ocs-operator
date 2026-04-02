@@ -2328,6 +2328,11 @@ func (s *OCSProviderServer) appendOBCResources(
 				clientOp:   pb.KubeClientOp_CREATE_OR_UPDATE,
 			},
 			kubeObjectWithOpRecord{
+				kubeObject:  ob,
+				clientOp:    pb.KubeClientOp_UPDATE_SUB_RESOURCE,
+				subResource: &statusSubResource,
+			},
+			kubeObjectWithOpRecord{
 				kubeObject: configMap,
 				clientOp:   pb.KubeClientOp_CREATE_OR_UPDATE,
 			},
