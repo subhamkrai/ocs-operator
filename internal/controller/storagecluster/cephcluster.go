@@ -392,6 +392,10 @@ func (obj *ocsCephCluster) ensureCreated(r *StorageClusterReconciler, sc *ocsv1.
 		return reconcile.Result{}, err
 	}
 
+	if err := r.reconcileCephMetricsTLS(context.TODO(), sc); err != nil {
+		return reconcile.Result{}, err
+	}
+
 	return reconcile.Result{}, nil
 }
 
@@ -624,6 +628,8 @@ func newCephCluster(r *StorageClusterReconciler, sc *ocsv1.StorageCluster, kmsCo
 	if sc.Spec.ManagedResources.CephCluster.CleanupPolicy != nil {
 		cephCluster.Spec.CleanupPolicy = *sc.Spec.ManagedResources.CephCluster.CleanupPolicy
 	}
+
+	configureCephClusterMetricsTLS(sc, cephCluster)
 
 	return cephCluster
 }

@@ -3830,6 +3830,11 @@ func (in *MonitoringSpec) DeepCopyInto(out *MonitoringSpec) {
 		*out = new(metav1.Duration)
 		**out = **in
 	}
+	if in.MetricsTLS != nil {
+		in, out := &in.MetricsTLS, &out.MetricsTLS
+		*out = new(MetricsTLSSpec)
+		**out = **in
+	}
 	if in.Exporter != nil {
 		in, out := &in.Exporter, &out.Exporter
 		*out = new(CephExporterSpec)
